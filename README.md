@@ -36,15 +36,17 @@ Now, our computer is aware of any changes that have been made to the original re
 
 **If you work on only one computer**, it may make sense to *rebase*. This alters the history of your repository so that it is as though it always contained the updates to the original branch. This results in a history that is clean and easy to follow. In order to rebase, after fetching from upstream, run the following command:
 
-    git rebase upstream/master
+    git rebase -Xpatience upstream/master
 
 Git will integrate all the changes made to the original repository into your local copy; when it's done, you'll have the updated files, and your history will incorporate both changes you have made and changes to the original repository. However, if you attempt to push your fork back to GitHub, you'll probably find that it's rejected. That's because you have rewritten history; the commits on your local computer and those you've pushed to GitHub in the past are no longer the same, as far as git is concerned. You can essentially overwrite your whole history on GitHub by running `git push -f`. But now, if you have any copies elsewhere (or if anyone else has cloned or forked your repository), those copies will be out of step with what's on GitHub. So if you're working on more than one computer, things become complicated. (In general, it's considered bad form to rewrite the history of commits you have already pushed elsewhere.) So...
 
 **If you work on more than one computer, or work with others**, it may instead make sense to *merge*. This will leave you with a much muddier, more complicated history, but it doesn't rewrite the history, meaning that you remain able easily to push to GitHub and update other copies accordingly. To make this happen, instead, execute the following command:
 
-    git merge upstream/master
+    git merge -Xpatience upstream/master
     
 This will merge the changes into your git history, and you can then push accordingly.
+
+The `-Xpatience` option specified for both modes of updating tells git to do a more thorough job of comparing the old and new files than usual, aligning them more carefully. Because .ipynb files contain a lot of repeated material, omitting this option can cause duplication of material or other misalignments. This will only be an issue when there have been upstream changes to a file you have also modified (for instance, if you have begun doing a set of exercises, and I edit the original repository to correct an error in that file); it should not make a difference when all that has changed is that new files have been added.
 
 ## Installing and Using Jupyter
 
